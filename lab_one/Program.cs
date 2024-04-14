@@ -30,7 +30,7 @@ internal class Program
 
         for(;;)
         {
-            Console.WriteLine("\nНачни печатать, но вначале выбери язык 1. English 2. Russian");
+            Console.WriteLine("\nНачните печатать, но вначале выберите язык (введите число): 1. English 2. Russian");
             string? lang_num = Console.ReadLine();
             int lang_num_str = 0;
             
