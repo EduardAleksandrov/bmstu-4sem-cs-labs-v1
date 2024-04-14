@@ -2,6 +2,8 @@
     Этап 1; Сделано
     Этап 2; Сделано
     Этап 3; Сделано
+    Этап 4; Сделано
+    Этап 5; Сделано
 */
 using lab_one;
 
@@ -22,14 +24,24 @@ internal class Program
         dictionary.Add(Lang.English, options_eng);
         dictionary.Add(Lang.Russian, options_rus);
 
+        Statistics statistics= new Statistics();
+
         for(;;)
         {
             Console.WriteLine("\nНачни печатать, но вначале выбери язык 1. English 2. Russian");
             string? lang_num = Console.ReadLine();
             int lang_num_str = 0;
-            if(lang_num == null || lang_num.Length == 0) continue;
-            else lang_num_str = int.Parse(lang_num);
-            // if(lang_num_str != 1 && lang_num_str != 2) continue;
+            
+            try
+            {
+                if(lang_num == null || lang_num.Length == 0) continue;
+                else lang_num_str = int.Parse(lang_num);
+            } catch
+            {
+                Console.WriteLine("Ошибка в знаке");
+                continue;
+            }
+            
             Lang lang_choose;
             if(lang_num_str == 1) lang_choose = Lang.English;
             else if(lang_num_str == 2) lang_choose = Lang.Russian;
@@ -44,12 +56,15 @@ internal class Program
             DateTime endedAt = DateTime.Now;
             TimeSpan span = endedAt - startedAt;
             
-            Typing one = new Typing(r, startedAt, endedAt, NumGettedMistakes(dictionary[lang_choose][r], get_txt)); 
+            Typing one = new Typing(r, startedAt, endedAt, NumGettedMistakes(dictionary[lang_choose][r], get_txt));
+            if(get_txt != null) statistics.PutData(span.TotalMilliseconds, get_txt.Length);
             Console.WriteLine($"---Количество ошибок в текущей попытке {one.NumMistakes} штук");
 
             Console.WriteLine($"---Время печати {span.Seconds}.{span.Milliseconds} seconds");
-            if(span.TotalMilliseconds < 7000) Console.WriteLine("---Результат хороший, попробуйте еще раз? Да/Нет");
-            else  Console.WriteLine("---Результат не очень, попробуйте еще раз? Да/Нет");
+            Console.WriteLine($"---У Вас {statistics.TryesSum} попыток, среднее время {statistics.GetMidTime()} зн/мин, худшая {statistics.GetMinTime()} зн/мин, лудшая {statistics.GetMaxTime()} зн/мин");
+            
+            if(span.TotalMilliseconds < 15000) Console.WriteLine("---Результат хороший, быстрее 15 секунд, попробуйте еще раз? Да/Нет");
+            else  Console.WriteLine("---Результат не очень, медленнее 15 секунд, попробуйте еще раз? Да/Нет");
             string? response = Console.ReadLine();
             if(response == "Нет") break; 
         }
