@@ -24,6 +24,8 @@ internal class Program
         dictionary.Add(Lang.English, options_eng);
         dictionary.Add(Lang.Russian, options_rus);
 
+        Typing one = new Typing(0, DateTime.Now, DateTime.Now, 0);
+
         Statistics statistics= new Statistics();
 
         for(;;)
@@ -55,11 +57,16 @@ internal class Program
             string? get_txt = Console.ReadLine();
             DateTime endedAt = DateTime.Now;
             TimeSpan span = endedAt - startedAt;
-            
-            Typing one = new Typing(r, startedAt, endedAt, NumGettedMistakes(dictionary[lang_choose][r], get_txt));
-            if(get_txt != null) statistics.PutData(span.TotalMilliseconds, get_txt.Length);
-            Console.WriteLine($"---Количество ошибок в текущей попытке {one.NumMistakes} штук");
 
+            // задание данных по текущей попытке
+            one.ArrayNumber = r; 
+            one.StartTime = startedAt;
+            one.EndTime = endedAt;
+            one.NumMistakes = NumGettedMistakes(dictionary[lang_choose][r], get_txt);
+            
+            if(get_txt != null) statistics.PutData(span.TotalMilliseconds, get_txt.Length);
+            
+            Console.WriteLine($"---Количество ошибок в текущей попытке {one.NumMistakes} штук");
             Console.WriteLine($"---Время печати {span.Seconds}.{span.Milliseconds} seconds");
             Console.WriteLine($"---У Вас {statistics.TryesSum} попыток, среднее время {statistics.GetMidTime()} зн/мин, худшая {statistics.GetMinTime()} зн/мин, лудшая {statistics.GetMaxTime()} зн/мин");
             
