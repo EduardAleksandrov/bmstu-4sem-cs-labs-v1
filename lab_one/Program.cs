@@ -48,7 +48,7 @@ internal class Program
             else continue;
 
             var random = new Random();
-            int r = random.Next(dictionary[lang_choose].Length);
+            int r = random.Next(dictionary[lang_choose].Length); //выбираем номер текста
 
             DateTime startedAt = DateTime.Now;
             Console.WriteLine(dictionary[lang_choose][r]);
