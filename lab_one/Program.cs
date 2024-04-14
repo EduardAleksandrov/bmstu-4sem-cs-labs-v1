@@ -1,6 +1,7 @@
 ﻿/*
     Этап 1; Сделано
     Этап 2; Сделано
+    Этап 3; Сделано
 */
 using lab_one;
 
@@ -9,35 +10,54 @@ internal class Program
     private static void Main(string[] args)
     {
         string txt1 = "Hello my dear friend!";
-        string txt2 = "How are you doing";
-        string txt3 = "Whatsapp my friend";
-        string[] options = new [] { txt1, txt2, txt3 };
+        string txt2 = "How are you doing?";
+        string txt3 = "Whatsapp my friend?";
+        string[] options_eng = new [] { txt1, txt2, txt3 };
+        string txt4 = "Привет дорогой друг!";
+        string txt5 = "Как дела?";
+        string txt6 = "Что новенького?";
+        string[] options_rus = new [] { txt4, txt5, txt6 };
+
+        var dictionary = new Dictionary<Lang, string[]>();
+        dictionary.Add(Lang.English, options_eng);
+        dictionary.Add(Lang.Russian, options_rus);
+
         for(;;)
         {
-            Console.WriteLine("\n Начни печатать");
-            Console.ReadLine();
-
-            DateTime startedAt = DateTime.Now;
+            Console.WriteLine("\nНачни печатать, но вначале выбери язык 1. English 2. Russian");
+            string? lang_num = Console.ReadLine();
+            int lang_num_str = 0;
+            if(lang_num == null || lang_num.Length == 0) continue;
+            else lang_num_str = int.Parse(lang_num);
+            // if(lang_num_str != 1 && lang_num_str != 2) continue;
+            Lang lang_choose;
+            if(lang_num_str == 1) lang_choose = Lang.English;
+            else if(lang_num_str == 2) lang_choose = Lang.Russian;
+            else continue;
 
             var random = new Random();
-            int r = random.Next(options.Length);
+            int r = random.Next(dictionary[lang_choose].Length);
 
-            Console.WriteLine(options[r]);
-
+            DateTime startedAt = DateTime.Now;
+            Console.WriteLine(dictionary[lang_choose][r]);
             string? get_txt = Console.ReadLine();
             DateTime endedAt = DateTime.Now;
             TimeSpan span = endedAt - startedAt;
             
-            Typing one = new Typing(r, startedAt, endedAt, NumGettedMistakes(options[r], get_txt)); 
-            Console.WriteLine(one.NumMistakes);
+            Typing one = new Typing(r, startedAt, endedAt, NumGettedMistakes(dictionary[lang_choose][r], get_txt)); 
+            Console.WriteLine($"---Количество ошибок в текущей попытке {one.NumMistakes} штук");
 
-            Console.WriteLine($"Время печати {span.Seconds}.{span.Milliseconds}, результат хороший попробуйте еще раз? Да/Нет");
+            Console.WriteLine($"---Время печати {span.Seconds}.{span.Milliseconds} seconds");
+            if(span.TotalMilliseconds < 7000) Console.WriteLine("---Результат хороший, попробуйте еще раз? Да/Нет");
+            else  Console.WriteLine("---Результат не очень, попробуйте еще раз? Да/Нет");
             string? response = Console.ReadLine();
             if(response == "Нет") break; 
-
-            
-
         }
+    }
+    enum Lang
+    {
+        English,
+        Russian
     }
     private static int NumGettedMistakes(string? original, string? actual)
     {
