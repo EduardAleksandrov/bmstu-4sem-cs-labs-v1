@@ -57,38 +57,38 @@ public class FileSystemWatcher
 
         _filesChanged.Clear();
 //---
-        // int countOfFiles = 0;
-        // foreach(FileInfo fileInfo in _directoryInfo.EnumerateFiles("*", SearchOption.AllDirectories))
-        // {
-        //     countOfFiles++;
-        //     // Console.WriteLine($"{fileInfo.CreationTime} {fileInfo.FullName} ({fileInfo.Length} bytes)");
-        //     // DateTime startedAt = fileInfo.CreationTime;
-        //     // Console.WriteLine(startedAt);
-        // }
+        int countOfFiles = 0;
+        foreach(FileInfo fileInfo in _directoryInfo.EnumerateFiles("*", SearchOption.AllDirectories))
+        {
+            countOfFiles++;
+            // Console.WriteLine($"{fileInfo.CreationTime} {fileInfo.FullName} ({fileInfo.Length} bytes)");
+            // DateTime startedAt = fileInfo.CreationTime;
+            // Console.WriteLine(startedAt);
+        }
         // var array = new int[countOfFiles];
 
         //если в базе ноль
-        // if(_dbFilesToSearch.Count == 0 && countOfFiles != 0)
-        // {
-        //     foreach(FileInfo fileInfo in _directoryInfo.EnumerateFiles("*", SearchOption.AllDirectories))
-        //     {
-        //         DateTime st = fileInfo.CreationTime;
-        //         _dbFilesToSearch.Add(new SearchedFiles(fileInfo.FullName, st, ""));
-        //         _filesChanged.Add(new SearchedFiles(fileInfo.FullName, st, "Добавлен"));
-        //     }
-        // }
-        // //если все удалили
-        // if(_dbFilesToSearch.Count != 0 && countOfFiles == 0)
-        // {
-        //     for(int i = 0; i < _dbFilesToSearch.Count; i++)
-        //     {
-        //         _filesChanged.Add(new SearchedFiles(_dbFilesToSearch[i]._path, _dbFilesToSearch[i]._changeDate, "Удален"));
-        //     }
-        //     _dbFilesToSearch.Clear();
-        // }
+        if(_dbFilesToSearch.Count == 0 && countOfFiles != 0)
+        {
+            foreach(FileInfo fileInfo in _directoryInfo.EnumerateFiles("*", SearchOption.AllDirectories))
+            {
+                DateTime st = fileInfo.CreationTime;
+                _dbFilesToSearch.Add(new SearchedFiles(fileInfo.FullName, st, ""));
+                _filesChanged.Add(new SearchedFiles(fileInfo.FullName, st, "Добавлен"));
+            }
+        }
+        //если все удалили
+        if(_dbFilesToSearch.Count != 0 && countOfFiles == 0)
+        {
+            for(int i = 0; i < _dbFilesToSearch.Count; i++)
+            {
+                _filesChanged.Add(new SearchedFiles(_dbFilesToSearch[i]._path, _dbFilesToSearch[i]._changeDate, "Удален"));
+            }
+            _dbFilesToSearch.Clear();
+        }
 //---
-        // if(_dbFilesToSearch.Count != 0 && countOfFiles != 0)
-        // {
+        if(_dbFilesToSearch.Count != 0 && countOfFiles != 0)
+        {
             for(int i = 0; i < _dbFilesToSearch.Count; i++)
             {
                 int sum_one = 0;
@@ -141,7 +141,7 @@ public class FileSystemWatcher
                     _dbFilesToSearch.Add(new SearchedFiles(fileInfo.FullName, st, ""));
                 }
             }
-        // }
+        }
 
         _notify?.Invoke(TimeOnly.FromDateTime(DateTime.Now), _filesChanged);
     }
