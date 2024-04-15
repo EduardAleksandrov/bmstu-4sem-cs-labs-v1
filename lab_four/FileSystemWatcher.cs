@@ -11,6 +11,7 @@ public class FileSystemWatcher
     protected List<SearchedFiles> _filesChanged;
     protected List<SearchedFiles> _dbFoldersToSearch;
     protected DirectoryInfo _directoryInfo;
+    private int La{ get; set; }
     public FileSystemWatcher()
     {
         _timer = new Timer(Got, null, 0, 2000);
@@ -21,6 +22,7 @@ public class FileSystemWatcher
         _dbFilesToSearch = new List<SearchedFiles>();
         _filesChanged = new List<SearchedFiles>();
         _dbFoldersToSearch = new List<SearchedFiles>();
+        La = 0;
     }
     public delegate void FileHandler(TimeOnly tm, List<SearchedFiles> sf);
     private FileHandler? _notify;
@@ -217,6 +219,8 @@ public class FileSystemWatcher
             }
         }   
 //--- end folders
+        if(La == 0 && (countOfFiles != 0 || countOfFolders != 0)) Console.WriteLine("Файлы/папки добавлены для отслеживания");
+        La = 1;
 
         _notify?.Invoke(TimeOnly.FromDateTime(DateTime.Now), _filesChanged);
     }
