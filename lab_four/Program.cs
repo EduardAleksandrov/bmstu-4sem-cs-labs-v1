@@ -52,7 +52,7 @@ internal class Program
     }
     public static void PrintStruct(TimeOnly tm, List<SearchedFiles> sf)
     {
-        if(sf.Count == 0) Console.WriteLine("Empty");
+        if(sf.Count == 0) Console.WriteLine("Searching");
         for(int i = 0; i < sf.Count; i++)
         {
             Console.WriteLine($"{tm} {sf[i]._path} {sf[i]._natureOfChange}");

@@ -9,6 +9,7 @@ public class FileSystemWatcher
     protected Timer? _timer;
     protected List<SearchedFiles> _dbFilesToSearch;
     protected List<SearchedFiles> _filesChanged;
+    protected List<SearchedFiles> _dbFoldersToSearch;
     protected DirectoryInfo _directoryInfo;
     public FileSystemWatcher()
     {
@@ -19,6 +20,7 @@ public class FileSystemWatcher
 
         _dbFilesToSearch = new List<SearchedFiles>();
         _filesChanged = new List<SearchedFiles>();
+        _dbFoldersToSearch = new List<SearchedFiles>();
     }
     public delegate void FileHandler(TimeOnly tm, List<SearchedFiles> sf);
     private FileHandler? _notify;
@@ -51,10 +53,10 @@ public class FileSystemWatcher
 
         
     }
-    public void Got(object? obj)
+    public void Got(object? obj) //go time
     {
         // _notify?.Invoke("hello");
-
+//files
         _filesChanged.Clear();
 //---
         int countOfFiles = 0;
@@ -142,6 +144,79 @@ public class FileSystemWatcher
                 }
             }
         }
+// --- end files
+
+//folders
+        int countOfFolders = 0;
+        IEnumerable<string> allfolders = Directory.EnumerateDirectories(_directoryInfo.Name, "*", SearchOption.AllDirectories);
+        foreach(string folder in allfolders)
+        {
+            countOfFolders++;
+        }
+        //если в базе ноль
+        if(_dbFoldersToSearch.Count == 0 && countOfFolders != 0)
+        {
+            foreach(string folder in allfolders)
+            {
+                DateTime st = DateTime.Now;
+                _dbFoldersToSearch.Add(new SearchedFiles(folder, st, ""));
+                _filesChanged.Add(new SearchedFiles(folder, st, "Добавлен"));
+            }
+        }
+        //если все удалили
+        if(_dbFoldersToSearch.Count != 0 && countOfFolders == 0)
+        {
+            for(int i = 0; i < _dbFoldersToSearch.Count; i++)
+            {
+                _filesChanged.Add(new SearchedFiles(_dbFoldersToSearch[i]._path, _dbFoldersToSearch[i]._changeDate, "Удален"));
+            }
+            _dbFoldersToSearch.Clear();
+            
+        }
+        if(_dbFoldersToSearch.Count != 0 && countOfFolders != 0)
+        {
+            for(int i = 0; i < _dbFoldersToSearch.Count; i++)
+            {
+                int sum_one = 0;
+                foreach(string folder in allfolders)
+                {
+                    if(_dbFoldersToSearch[i]._path == folder)
+                    {
+                        sum_one++;
+                    }
+                }
+                if(sum_one == 0)
+                {
+                    _filesChanged.Add(new SearchedFiles(_dbFoldersToSearch[i]._path, _dbFoldersToSearch[i]._changeDate, "Удален"));
+                }
+            }
+            foreach(string folder in allfolders)
+            {
+                int sum = 0;
+                for(int i = 0; i < _dbFoldersToSearch.Count; i++)
+                {
+                    if(_dbFoldersToSearch[i]._path != folder)
+                    {
+                        sum++;
+                    }
+                }
+                if(sum == _dbFoldersToSearch.Count)
+                {
+                    DateTime st = DateTime.Now;
+                    _filesChanged.Add(new SearchedFiles(folder, st, "Добавлен"));
+                }
+            }
+            if(_filesChanged.Count > 0)
+            {
+                _dbFoldersToSearch.Clear();
+                foreach(string folder in allfolders)
+                {
+                    DateTime st = DateTime.Now;
+                    _dbFoldersToSearch.Add(new SearchedFiles(folder, st, ""));
+                }
+            }
+        }   
+//--- end folders
 
         _notify?.Invoke(TimeOnly.FromDateTime(DateTime.Now), _filesChanged);
     }
