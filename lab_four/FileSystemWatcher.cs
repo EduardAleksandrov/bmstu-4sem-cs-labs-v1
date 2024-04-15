@@ -12,12 +12,12 @@ public class FileSystemWatcher
     protected List<SearchedFiles> _dbFoldersToSearch;
     protected DirectoryInfo _directoryInfo;
     private int La{ get; set; }
-    public FileSystemWatcher()
+    public FileSystemWatcher(string path)
     {
         _timer = new Timer(Got, null, 0, 2000);
         _timer.Change(Timeout.Infinite,Timeout.Infinite);
 
-        _directoryInfo = new DirectoryInfo(@"./files");
+        _directoryInfo = new DirectoryInfo(path);
 
         _dbFilesToSearch = new List<SearchedFiles>();
         _filesChanged = new List<SearchedFiles>();
@@ -162,7 +162,7 @@ public class FileSystemWatcher
             {
                 DateTime st = DateTime.Now;
                 _dbFoldersToSearch.Add(new SearchedFiles(folder, st, ""));
-                _filesChanged.Add(new SearchedFiles(folder, st, "Добавлен"));
+                _filesChanged.Add(new SearchedFiles(folder, st, "Добавлена"));
             }
         }
         //если все удалили
@@ -170,7 +170,7 @@ public class FileSystemWatcher
         {
             for(int i = 0; i < _dbFoldersToSearch.Count; i++)
             {
-                _filesChanged.Add(new SearchedFiles(_dbFoldersToSearch[i]._path, _dbFoldersToSearch[i]._changeDate, "Удален"));
+                _filesChanged.Add(new SearchedFiles(_dbFoldersToSearch[i]._path, _dbFoldersToSearch[i]._changeDate, "Удалена"));
             }
             _dbFoldersToSearch.Clear();
             
@@ -189,7 +189,7 @@ public class FileSystemWatcher
                 }
                 if(sum_one == 0)
                 {
-                    _filesChanged.Add(new SearchedFiles(_dbFoldersToSearch[i]._path, _dbFoldersToSearch[i]._changeDate, "Удален"));
+                    _filesChanged.Add(new SearchedFiles(_dbFoldersToSearch[i]._path, _dbFoldersToSearch[i]._changeDate, "Удалена"));
                 }
             }
             foreach(string folder in allfolders)
@@ -205,7 +205,7 @@ public class FileSystemWatcher
                 if(sum == _dbFoldersToSearch.Count)
                 {
                     DateTime st = DateTime.Now;
-                    _filesChanged.Add(new SearchedFiles(folder, st, "Добавлен"));
+                    _filesChanged.Add(new SearchedFiles(folder, st, "Добавлена"));
                 }
             }
             if(_filesChanged.Count > 0)

@@ -19,7 +19,8 @@ internal class Program
         //     Console.WriteLine(folder);
         // }
 
-        lab_four.FileSystemWatcher file_watcher = new lab_four.FileSystemWatcher();
+        string path = @"./files";
+        lab_four.FileSystemWatcher file_watcher = new lab_four.FileSystemWatcher(path);
         for(;;)
         {
             Console.WriteLine("Введите цифру: 1. Добавить подписчика, 2. Удалить подписчика");
