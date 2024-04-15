@@ -32,13 +32,13 @@ public class FileSystemWatcher
         {
             _notify += value;
             if(_notify?.GetInvocationList().Length == 1) WatcherSet();
-            Console.WriteLine("added");
+            // Console.WriteLine("added");
         }
         remove
         {
             _notify -= value;
             if(_notify?.GetInvocationList().Length == 0) WatcherDel();
-            Console.WriteLine("deleted");
+            // Console.WriteLine("deleted");
         }
     }
     private void WatcherSet()
@@ -78,7 +78,7 @@ public class FileSystemWatcher
             {
                 DateTime st = fileInfo.CreationTime;
                 _dbFilesToSearch.Add(new SearchedFiles(fileInfo.FullName, st, ""));
-                _filesChanged.Add(new SearchedFiles(fileInfo.FullName, st, "Добавлен"));
+                if(La != 0) _filesChanged.Add(new SearchedFiles(fileInfo.FullName, st, "Добавлен"));
             }
         }
         //если все удалили
@@ -162,7 +162,7 @@ public class FileSystemWatcher
             {
                 DateTime st = DateTime.Now;
                 _dbFoldersToSearch.Add(new SearchedFiles(folder, st, ""));
-                _filesChanged.Add(new SearchedFiles(folder, st, "Добавлена"));
+                if(La != 0) _filesChanged.Add(new SearchedFiles(folder, st, "Добавлена"));
             }
         }
         //если все удалили
@@ -219,7 +219,7 @@ public class FileSystemWatcher
             }
         }   
 //--- end folders
-        if(La == 0 && (countOfFiles != 0 || countOfFolders != 0)) Console.WriteLine("Файлы/папки добавлены для отслеживания");
+        // if(La == 0 && (countOfFiles != 0 || countOfFolders != 0)) Console.WriteLine("Файлы/папки добавлены для отслеживания");
         La = 1;
 
         _notify?.Invoke(TimeOnly.FromDateTime(DateTime.Now), _filesChanged);

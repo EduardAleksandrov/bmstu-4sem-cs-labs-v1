@@ -37,9 +37,11 @@ internal class Program
             if(xx == 1) 
             {
                 file_watcher.Notify+= PrintStruct;
+                Console.WriteLine("Подписчик добавлен");
             } else if(xx == 2) 
             {
                 file_watcher.Notify-= PrintStruct;
+                Console.WriteLine("Подписчик удален");
             } else {
                 continue;
             }
