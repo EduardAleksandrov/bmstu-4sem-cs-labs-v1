@@ -101,12 +101,12 @@ public class MeterPr
 // ++
     public static MeterPr operator++(MeterPr m1) // test 14
     {
-        return new MeterPr (m1.M + 1);
+        return new MeterPr (m1.M + 1.0);
     }
 // --
     public static MeterPr operator--(MeterPr m1) // test 15
     {
-        return new MeterPr (m1.M - 1);
+        return new MeterPr (m1.M - 1.0);
     }
 // ==
     public static bool operator==(MeterPr m1, MeterPr m2) // test 16
@@ -153,4 +153,24 @@ public class MeterPr
     {
         return new MeterPr (m1);
     }
+// equals
+    public override bool Equals(object? obj) // test 24
+    {
+        if (obj is MeterPr objectType) // если true автоматическое преобразование типа
+        {
+            return this.M == objectType.M;
+        }
+        return false;
+    }
+// gethashcode
+    public override int GetHashCode() // test 25
+    {
+        return (M).GetHashCode();
+    }
+// toString
+    public override string ToString() // test 26
+    {
+        return "Всего метров: " + M;
+    } 
+
 }

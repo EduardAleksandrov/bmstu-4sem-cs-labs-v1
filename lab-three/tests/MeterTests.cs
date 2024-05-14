@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 using project;
 
-public class UnitTest1
+public class MeterTests
 {
     // дюймов в метре
     private const double im = 39.37008;
@@ -132,7 +132,7 @@ public class UnitTest1
         MeterPr el = el1 * el2;
 
         // assert
-        Assert.Equal(20, el.M);
+        Assert.Equal(20.0, el.M);
     }
     [Fact]
     public void Test9()
@@ -352,5 +352,45 @@ public class UnitTest1
 
         // assert
         Assert.Equal(8, el.M);
+    }
+// "Equals" MeterPr 
+    [Fact]
+    public void Test24()
+    {
+        // arrange
+        MeterPr el1 = new MeterPr(5.0);
+        MeterPr el2 = new MeterPr(5.0);
+        
+        // act
+        bool e = el1.Equals(el2);
+
+        // assert
+        Assert.True(e);
+    }
+// "GetHashCode" MeterPr 
+    [Fact]
+    public void Test25()
+    {
+        // arrange
+        MeterPr el1 = new MeterPr(5.0);
+        
+        // act
+        bool e = el1.GetHashCode() == 5.0.GetHashCode();
+
+        // assert
+        Assert.True(e);
+    }
+// "toString" MeterPr 
+    [Fact]
+    public void Test26()
+    {
+        // arrange
+        MeterPr el = new MeterPr(5.0);
+        
+        // act
+        bool e = el.ToString() == "Всего метров: 5";
+
+        // assert
+        Assert.True(e);
     }
 }
