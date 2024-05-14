@@ -3,8 +3,8 @@ namespace project;
 public class Inch
 {
     public double I { get; set; }
-    private const double mi = 39.37008;
-    private const double im = 0.0254;
+    private const double im = 39.37008;
+    private const double mi = 0.0254;
     public Inch(double i)
     {
         I = i;
