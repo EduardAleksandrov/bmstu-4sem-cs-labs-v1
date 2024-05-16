@@ -34,12 +34,13 @@ namespace AppWithPlugin
 
                 for(;;)
                 {
-                    Console.WriteLine("Введите команду: ");
+                    Console.WriteLine("Введите <команду> и <текст> или help, или exit: ");
                     string? choose = Console.ReadLine();
+                    string[] msg = choose!.Split(new char[] { ' ' });
 
-                    if(choose == "exit") break;
+                    if(msg[0] == "exit") break;
 
-                    if (choose == "help")
+                    if (msg[0] == "help")
                     {
                         Console.WriteLine("Commands: ");
                         // Output the loaded commands.
@@ -47,23 +48,24 @@ namespace AppWithPlugin
                         {
                             Console.WriteLine($"{command.Name}\t - {command.Description}");
                         }
+                        Console.WriteLine("help - получить список команд");
                     }
                     else
                     {
                         // foreach (string commandName in args)
                         // {
-                            string? commandName = choose;
-                            Console.WriteLine($"-- {commandName} --");
+                            string? commandName = msg[0];
+                            Console.WriteLine($"\n-- {commandName} --");
 
                             // Execute the command with the name passed as an argument.
-                            ICommand command = commands.FirstOrDefault(c => c.Name == commandName);
+                            ICommand? command = commands.FirstOrDefault(c => c.Name == commandName);
                             if (command == null)
                             {
                                 Console.WriteLine("No such command is known.");
-                                return;
+                                // return;
                             }
 
-                            command.Execute();
+                            command?.Execute(msg[1]);
 
                             Console.WriteLine();
                         // }
@@ -85,7 +87,7 @@ namespace AppWithPlugin
                     Path.GetDirectoryName(
                         Path.GetDirectoryName(
                             Path.GetDirectoryName(
-                                Path.GetDirectoryName(typeof(Program).Assembly.Location)))))));
+                                Path.GetDirectoryName(typeof(Program).Assembly.Location)))))!));
 
             string pluginLocation = Path.GetFullPath(Path.Combine(root, relativePath.Replace('\\', Path.DirectorySeparatorChar)));
             Console.WriteLine($"Loading commands from: {pluginLocation}");
@@ -101,7 +103,7 @@ namespace AppWithPlugin
             {
                 if (typeof(ICommand).IsAssignableFrom(type))
                 {
-                    ICommand result = Activator.CreateInstance(type) as ICommand;
+                    ICommand? result = Activator.CreateInstance(type) as ICommand;
                     if (result != null)
                     {
                         count++;

@@ -5,6 +5,6 @@ namespace PluginBase
         string Name { get; }
         string Description { get; }
 
-        int Execute();
+        int Execute(string? msg);
     }
 }
