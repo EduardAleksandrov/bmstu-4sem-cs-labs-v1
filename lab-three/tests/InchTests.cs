@@ -1,29 +1,26 @@
 namespace tests;
-
-using System.Linq.Expressions;
-
 using project;
 
-public class MeterTests
+public class InchTests
 {
     // дюймов в метре
     private const double im = 39.37008;
     // метров в дюйме
     private const double mi = 0.0254;
 
-// "+" MeterPr 
-    [Fact(DisplayName = "Lab 3")]
+// "+"
+    [Fact]
     public void Test1()
     {
         // arrange
-        MeterPr el1 = new MeterPr(5.0);
-        MeterPr el2 = new MeterPr(4.0);
+        Inch el1 = new Inch(5.0);
+        Inch el2 = new Inch(4.0);
         
         // act
-        MeterPr el = el1+el2;
+        Inch el = el1+el2;
 
         // assert
-        Assert.Equal(9, el.M);
+        Assert.Equal(9, el.I);
     }
     [Fact]
     public void Test2()
@@ -35,11 +32,10 @@ public class MeterTests
         Inch el2 = new Inch(y);
         
         // act
-        MeterPr el = el1+el2;
-        // MeterPr e = el2+el1;
+        Inch el = el2 + el1;
 
         // assert
-        Assert.Equal(x+y*mi, el.M);
+        Assert.Equal(x*im+y, el.I);
         // Assert.Equal(x+y*mi, e.M);
     }
     [Fact]
@@ -48,29 +44,29 @@ public class MeterTests
         // arrange
         double x = 5.0;
         double y = 1.0;
-        MeterPr el1 = new MeterPr(x);
+        Inch el1 = new Inch(x);
         
         // act
-        MeterPr el = el1+y;
-        MeterPr e = y+el1;
+        Inch el = el1+y;
+        Inch e = y+el1;
 
         // assert
-        Assert.Equal(x+y, el.M);
-        Assert.Equal(y+x, e.M);
+        Assert.Equal(x+y, el.I);
+        Assert.Equal(y+x, e.I);
     }
-// "-" MeterPr 
+// "-" 
     [Fact]
     public void Test5()
     {
         // arrange
-        MeterPr el1 = new MeterPr(5.0);
-        MeterPr el2 = new MeterPr(4.0);
+        Inch el1 = new Inch(5.0);
+        Inch el2 = new Inch(4.0);
         
         // act
-        MeterPr el = el1-el2;
+        Inch el = el1-el2;
 
         // assert
-        Assert.Equal(1, el.M);
+        Assert.Equal(1, el.I);
     }
     [Fact]
     public void Test6()
@@ -82,12 +78,10 @@ public class MeterTests
         Inch el2 = new Inch(y);
         
         // act
-        MeterPr el = el1-el2;
-        // MeterPr e = el2-el1;
+        Inch e = el2-el1;
 
         // assert
-        Assert.Equal(x-y*mi, el.M);
-        // Assert.Equal(y*mi - x, e.M);
+        Assert.Equal(y-x*im, e.I);
     }
     [Fact]
     public void Test7()
@@ -95,29 +89,29 @@ public class MeterTests
         // arrange
         double x = 5.0;
         double y = 1.0;
-        MeterPr el1 = new MeterPr(x);
+        Inch el1 = new Inch(x);
         
         // act
-        MeterPr el = el1-y;
-        MeterPr e = y-el1;
+        Inch el = el1-y;
+        Inch e = y-el1;
 
         // assert
-        Assert.Equal(x-y, el.M);
-        Assert.Equal(y-x, e.M);
+        Assert.Equal(x-y, el.I);
+        Assert.Equal(y-x, e.I);
     }
-// "*" MeterPr 
+// "*"  
     [Fact]
     public void Test8()
     {
         // arrange
-        MeterPr el1 = new MeterPr(5.0);
-        MeterPr el2 = new MeterPr(4.0);
+        Inch el1 = new Inch(5.0);
+        Inch el2 = new Inch(4.0);
         
         // act
-        MeterPr el = el1 * el2;
+        Inch el = el1 * el2;
 
         // assert
-        Assert.Equal(20.0, el.M);
+        Assert.Equal(20.0, el.I);
     }
     [Fact]
     public void Test9()
@@ -129,12 +123,10 @@ public class MeterTests
         Inch el2 = new Inch(y);
         
         // act
-        MeterPr el = el1 * el2;
-        // MeterPr e = el2 * el1;
+        Inch e = el2 * el1;
 
         // assert
-        Assert.Equal(x * y*mi, el.M);
-        // Assert.Equal(y*mi * x, e.M);
+        Assert.Equal(y * x*im, e.I);
     }
     [Fact]
     public void Test10()
@@ -142,29 +134,29 @@ public class MeterTests
         // arrange
         double x = 5.0;
         double y = 1.0;
-        MeterPr el1 = new MeterPr(x);
+        Inch el1 = new Inch(x);
         
         // act
-        MeterPr el = el1 * y;
-        MeterPr e = y * el1;
+        Inch el = el1 * y;
+        Inch e = y * el1;
 
         // assert
-        Assert.Equal(x*y, el.M);
-        Assert.Equal(y*x, e.M);
+        Assert.Equal(x*y, el.I);
+        Assert.Equal(y*x, e.I);
     }
-// "/" MeterPr 
+// "/"
     [Fact]
     public void Test11()
     {
         // arrange
-        MeterPr el1 = new MeterPr(5.0);
-        MeterPr el2 = new MeterPr(4.0);
+        Inch el1 = new Inch(5.0);
+        Inch el2 = new Inch(4.0);
         
         // act
-        MeterPr el = el1 / el2;
+        Inch el = el1 / el2;
 
         // assert
-        Assert.Equal(5.0/4.0, el.M);
+        Assert.Equal(5.0/4.0, el.I);
     }
     [Fact]
     public void Test12()
@@ -176,12 +168,10 @@ public class MeterTests
         Inch el2 = new Inch(y);
         
         // act
-        MeterPr el = el1 / el2;
-        // MeterPr e = el2 / el1;
+        Inch e = el2 / el1;
 
         // assert
-        Assert.Equal(x / y*mi, el.M);
-        // Assert.Equal(y*mi / x, e.M);
+        Assert.Equal(y / (x*im), e.I);
     }
     [Fact]
     public void Test13()
@@ -189,49 +179,49 @@ public class MeterTests
         // arrange
         double x = 5.0;
         double y = 1.0;
-        MeterPr el1 = new MeterPr(x);
+        Inch el1 = new Inch(x);
         
         // act
-        MeterPr el = el1 / y;
-        MeterPr e = y / el1;
+        Inch el = el1 / y;
+        Inch e = y / el1;
 
         // assert
-        Assert.Equal(x / y, el.M);
-        Assert.Equal(y / x, e.M);
+        Assert.Equal(x / y, el.I);
+        Assert.Equal(y / x, e.I);
     }
-// "++" MeterPr 
+// "++"
     [Fact]
     public void Test14()
     {
         // arrange
-        MeterPr el = new MeterPr(5.0);
+        Inch el = new Inch(5.0);
         
         // act
         el++;
 
         // assert
-        Assert.Equal(6.0, el.M);
+        Assert.Equal(6.0, el.I);
     }
-// "--" MeterPr 
+// "--"
     [Fact]
     public void Test15()
     {
         // arrange
-        MeterPr el = new MeterPr(5.0);
+        Inch el = new Inch(5.0);
         
         // act
         el--;
 
         // assert
-        Assert.Equal(4.0, el.M);
+        Assert.Equal(4.0, el.I);
     }
-// "==" MeterPr 
+// "==" 
     [Fact]
     public void Test16()
     {
         // arrange
-        MeterPr el1 = new MeterPr(5.0);
-        MeterPr el2 = new MeterPr(5.0);
+        Inch el1 = new Inch(5.0);
+        Inch el2 = new Inch(5.0);
         
         // act
         bool act = el1 == el2;
@@ -239,13 +229,13 @@ public class MeterTests
         // assert
         Assert.True(act);
     }
-// "!=" MeterPr 
+// "!="
     [Fact]
     public void Test17()
     {
         // arrange
-        MeterPr el1 = new MeterPr(5.0);
-        MeterPr el2 = new MeterPr(5.0);
+        Inch el1 = new Inch(5.0);
+        Inch el2 = new Inch(5.0);
         
         // act
         bool act = el1 != el2;
@@ -253,13 +243,13 @@ public class MeterTests
         // assert
         Assert.True(!act);
     }
-// "<" MeterPr 
+// "<"
     [Fact]
     public void Test18()
     {
         // arrange
-        MeterPr el1 = new MeterPr(5.0);
-        MeterPr el2 = new MeterPr(6.0);
+        Inch el1 = new Inch(5.0);
+        Inch el2 = new Inch(6.0);
         
         // act
         bool act = el1 < el2;
@@ -267,13 +257,13 @@ public class MeterTests
         // assert
         Assert.True(act);
     }
-// ">" MeterPr 
+// ">"
     [Fact]
     public void Test19()
     {
         // arrange
-        MeterPr el1 = new MeterPr(5.0);
-        MeterPr el2 = new MeterPr(6.0);
+        Inch el1 = new Inch(5.0);
+        Inch el2 = new Inch(6.0);
         
         // act
         bool act = el1 > el2;
@@ -281,13 +271,13 @@ public class MeterTests
         // assert
         Assert.True(!act);
     }
-// "<=" MeterPr 
+// "<="
     [Fact]
     public void Test20()
     {
         // arrange
-        MeterPr el1 = new MeterPr(5.0);
-        MeterPr el2 = new MeterPr(5.0);
+        Inch el1 = new Inch(5.0);
+        Inch el2 = new Inch(5.0);
         
         // act
         bool act = el1 <= el2;
@@ -295,13 +285,13 @@ public class MeterTests
         // assert
         Assert.True(act);
     }
-// ">=" MeterPr 
+// ">="
     [Fact]
     public void Test21()
     {
         // arrange
-        MeterPr el1 = new MeterPr(5.0);
-        MeterPr el2 = new MeterPr(5.0);
+        Inch el1 = new Inch(5.0);
+        Inch el2 = new Inch(5.0);
         
         // act
         bool act = el1 >= el2;
@@ -309,23 +299,23 @@ public class MeterTests
         // assert
         Assert.True(act);
     }
-// "explicit" MeterPr 
+// "explicit"
     [Fact]
     public void Test22()
     {
         // arrange
         double el1 = 5.0;
-        Inch el2 = new Inch(7.0);
+        MeterPr el2 = new MeterPr(7.0);
         
         // act
-        MeterPr el = (MeterPr)el1;
-        MeterPr ell = (MeterPr)el2;
+        Inch el = (Inch)el1;
+        Inch ell = (Inch)el2;
 
         // assert
-        Assert.Equal(5.0, el.M);
-        Assert.Equal(7.0*mi, ell.M);
+        Assert.Equal(5.0, el.I);
+        Assert.Equal(7.0*im, ell.I);
     }
-// "implicit" MeterPr 
+// "implicit"
     [Fact]
     public void Test23()
     {
@@ -333,18 +323,18 @@ public class MeterTests
         int e = 8;
         
         // act
-        MeterPr el = e;
+        Inch el = e;
 
         // assert
-        Assert.Equal(8, el.M);
+        Assert.Equal(8, el.I);
     }
-// "Equals" MeterPr 
+// "Equals"
     [Fact]
     public void Test24()
     {
         // arrange
-        MeterPr el1 = new MeterPr(5.0);
-        MeterPr el2 = new MeterPr(5.0);
+        Inch el1 = new Inch(5.0);
+        Inch el2 = new Inch(5.0);
         
         // act
         bool e = el1.Equals(el2);
@@ -352,12 +342,12 @@ public class MeterTests
         // assert
         Assert.True(e);
     }
-// "GetHashCode" MeterPr 
+// "GetHashCode"
     [Fact]
     public void Test25()
     {
         // arrange
-        MeterPr el1 = new MeterPr(5.0);
+        Inch el1 = new Inch(5.0);
         
         // act
         bool e = el1.GetHashCode() == 5.0.GetHashCode();
@@ -365,15 +355,15 @@ public class MeterTests
         // assert
         Assert.True(e);
     }
-// "toString" MeterPr 
+// "toString"
     [Fact]
     public void Test26()
     {
         // arrange
-        MeterPr el = new MeterPr(5.0);
+        Inch el = new Inch(5.0);
         
         // act
-        bool e = el.ToString() == "Всего метров: 5";
+        bool e = el.ToString() == "Всего дюймов: 5";
 
         // assert
         Assert.True(e);

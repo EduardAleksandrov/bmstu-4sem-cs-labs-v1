@@ -18,10 +18,6 @@ public class MeterPr
     {
         return new MeterPr(m1.M + m2.I*mi);
     }
-    public static MeterPr operator+(Inch m1, MeterPr m2) // test3
-    {
-        return new MeterPr(m1.I*mi + m2.M);
-    }
     public static MeterPr operator+(MeterPr m1, double m2) // test4
     {
         return new MeterPr(m1.M + m2);
@@ -39,10 +35,6 @@ public class MeterPr
     {
         return new MeterPr(m1.M - m2.I*mi);
     }
-    public static MeterPr operator-(Inch m1, MeterPr m2) // test6
-    {
-        return new MeterPr(m1.I*mi - m2.M);
-    }
     public static MeterPr operator-(MeterPr m1, double m2) // test7
     {
         return new MeterPr(m1.M - m2);
@@ -59,10 +51,6 @@ public class MeterPr
     public static MeterPr operator*(MeterPr m1, Inch m2) // test9
     {
         return new MeterPr(m1.M * m2.I*mi);
-    }
-    public static MeterPr operator*(Inch m1, MeterPr m2) // test9
-    {
-        return new MeterPr(m1.I*mi * m2.M);
     }
     public static MeterPr operator*(MeterPr m1, double m2) // test10
     {
@@ -82,11 +70,6 @@ public class MeterPr
     {
         if(m2.I*mi == 0) throw new ArgumentException("Div by zero");
         else return new MeterPr(m1.M / m2.I*mi);
-    }
-    public static MeterPr operator/(Inch m1, MeterPr m2) // test12
-    {
-        if(m2.M == 0) throw new ArgumentException("Div by zero");
-        else return new MeterPr(m1.I*mi / m2.M);
     }
     public static MeterPr operator/(MeterPr m1, double m2) // test13
     {
