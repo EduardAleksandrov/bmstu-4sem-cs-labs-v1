@@ -12,4 +12,6 @@
 
 Лабораторная работа №2 [Задача](./lab_two-numeric-analysis/README.md) [Решение](./lab_two-numeric-analysis)
 
+Лабораторная работа №3 [Задача](./lab-three/README.md) [Решение](./lab-three)
+
 Лабораторная работа №4 [Задача](./lab_four/README.md) [Решение](./lab_four)
