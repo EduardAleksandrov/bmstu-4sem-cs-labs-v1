@@ -23,7 +23,8 @@ namespace AppWithPlugin
                 string[] pluginPaths = new string[]
                 {
                     // Paths to plugins to load.
-                    @"HelloPlugin\bin\Debug\net8.0\HelloPlugin.dll"
+                    @"HelloPlugin\bin\Debug\net8.0\HelloPlugin.dll",
+                    @"WhatsappPlugin\bin\Debug\net8.0\WhatsappPlugin.dll"
                 };
 
                 IEnumerable<ICommand> commands = pluginPaths.SelectMany(pluginPath =>
@@ -34,7 +35,7 @@ namespace AppWithPlugin
 
                 for(;;)
                 {
-                    Console.WriteLine("Введите <команду> и <текст> или help, или exit: ");
+                    Console.WriteLine("\nВведите <команду> и <текст> или help, или exit: ");
                     string? choose = Console.ReadLine();
                     string[] msg = choose!.Split(new char[] { ' ' });
 
@@ -42,18 +43,23 @@ namespace AppWithPlugin
 
                     if (msg[0] == "help")
                     {
-                        Console.WriteLine("Commands: ");
+                        Console.WriteLine("\nCommands: ");
                         // Output the loaded commands.
                         foreach (ICommand command in commands)
                         {
-                            Console.WriteLine($"{command.Name}\t - {command.Description}");
+                            Console.WriteLine($"{command.Name} <txt> - {command.Description}");
                         }
-                        Console.WriteLine("help - получить список команд");
+                        Console.WriteLine("help - Получить список всех команд \nexit - Выход");
                     }
                     else
                     {
                         // foreach (string commandName in args)
                         // {
+                            if(msg.Length == 1) 
+                            {
+                                Console.WriteLine("Введите <текст> после команды");
+                                continue;
+                            }
                             string? commandName = msg[0];
                             Console.WriteLine($"\n-- {commandName} --");
 
