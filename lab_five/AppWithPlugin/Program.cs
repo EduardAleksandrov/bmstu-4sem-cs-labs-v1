@@ -32,36 +32,44 @@ namespace AppWithPlugin
                     return CreateCommands(pluginAssembly);
                 }).ToList();
 
-                
-
-                if (args.Length == 0)
+                for(;;)
                 {
-                    Console.WriteLine("Commands: ");
-                    // Output the loaded commands.
-                    foreach (ICommand command in commands)
-                    {
-                        Console.WriteLine($"{command.Name}\t - {command.Description}");
-                    }
-                }
-                else
-                {
-                    foreach (string commandName in args)
-                    {
-                        Console.WriteLine($"-- {commandName} --");
+                    Console.WriteLine("Введите команду: ");
+                    string? choose = Console.ReadLine();
 
-                        // Execute the command with the name passed as an argument.
-                        ICommand command = commands.FirstOrDefault(c => c.Name == commandName);
-                        if (command == null)
+                    if(choose == "exit") break;
+
+                    if (choose == "help")
+                    {
+                        Console.WriteLine("Commands: ");
+                        // Output the loaded commands.
+                        foreach (ICommand command in commands)
                         {
-                            Console.WriteLine("No such command is known.");
-                            return;
+                            Console.WriteLine($"{command.Name}\t - {command.Description}");
                         }
+                    }
+                    else
+                    {
+                        // foreach (string commandName in args)
+                        // {
+                            string? commandName = choose;
+                            Console.WriteLine($"-- {commandName} --");
 
-                        command.Execute();
+                            // Execute the command with the name passed as an argument.
+                            ICommand command = commands.FirstOrDefault(c => c.Name == commandName);
+                            if (command == null)
+                            {
+                                Console.WriteLine("No such command is known.");
+                                return;
+                            }
 
-                        Console.WriteLine();
+                            command.Execute();
+
+                            Console.WriteLine();
+                        // }
                     }
                 }
+                
             }
             catch (Exception ex)
             {
